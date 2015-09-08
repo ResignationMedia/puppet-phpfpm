@@ -65,6 +65,16 @@ define phpfpm::pool (
       pm_max_spare_servers(${pm_max_spare_servers})")
   }
 
+  user { $user: 
+    ensure => 'present',
+    name => $user,
+  }
+
+  group { $group: 
+    ensure => 'present',
+    name => $group,
+  }
+
   file { $pool_file_path:
     ensure  => $ensure,
     owner   => 'root',
