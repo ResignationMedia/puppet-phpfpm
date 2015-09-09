@@ -11,7 +11,7 @@ class phpfpm::params {
       $poold_purge = false
 
       # Service configuration defaults
-      $package_name                   = 'php5-fpm'
+      $package_name                   = hiera('phpfpm::params::package_name')
       $service_name                   = 'php5-fpm'
       $config_dir                     = '/etc/php5/fpm'
       $config_name                    = 'php-fpm.conf'
