@@ -55,6 +55,7 @@ define phpfpm::pool (
     $service_name              = $phpfpm::params::service_name,
     $pool_dir                  = $phpfpm::params::pool_dir,
     $pool_template_file        = $phpfpm::params::pool_template_file,
+    $pool_error_log            = undef,
 ) {
   $pool_file_path = "${pool_dir}/${name}.conf"
 
@@ -73,5 +74,27 @@ define phpfpm::pool (
     content => template($pool_template_file),
     require => Class['Phpfpm::Package'],
     notify  => Service[$service_name],
+  }
+
+  if $pool_error_log != undef {
+    file { $pool_error_log:
+      ensure => file,
+      owner => $user,
+      group => $group,
+      mode => '0640',
+      before => File[$pool_file_path],
+      require => Class['Phpfpm::Package'],
+    }
+  }
+
+  if $slowlog != undef {
+    file { $slowlog:
+      ensure => file,
+      owner => $user,
+      group => $group,
+      mode => '0640',
+      before => File[$pool_file_path],
+      require => Class['Phpfpm::Package'],
+    }
   }
 }
