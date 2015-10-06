@@ -12,9 +12,9 @@ class phpfpm::package {
   if $::phpfpm::ensure == 'present' {
     file { "/var/log/php-fpm":
       ensure => directory,
-      owner => 'php-fpm',
-      group => 'root',
-      mode => '0775',
+      owner => hiera('phpfpm::log_directory.owner', 'php-fpm'),
+      group => hiera('phpfpm::log_directory.group', 'root'),
+      mode => hiera('phpfpm::log_directory.mode', '0775'),
       require => Package[$::phpfpm::package_name],
     }
   }
