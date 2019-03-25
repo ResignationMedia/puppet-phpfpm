@@ -9,4 +9,3 @@ class phpfpm::package {
     ensure => $::phpfpm::ensure,
   }
 }
-
